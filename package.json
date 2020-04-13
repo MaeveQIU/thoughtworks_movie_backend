@@ -4,7 +4,8 @@
   "description": "## 练习目标",
   "main": "index.js",
   "scripts": {
-    "start": "node server"
+    "start": "node server",
+    "server" : "json-server --watch db.json --port 3000"
   },
   "repository": {
     "type": "git",

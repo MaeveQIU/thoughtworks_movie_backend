@@ -47,7 +47,7 @@
 
 1. 请在 `client` 目录下开发；
 
-2. 需要请求 API 时，请在根目录下打开终端输入 `npm run start`；
+2. 需要请求 API 时，请在根目录下打开终端输入 `npm run start` 打开 `node server`; `npm run server`, 打开`json-server`。然后broswer打开client下的index.html，显示主页面。
 
 3. API 请求规则：
   - basic url：`http://127.0.0.1:8888`
