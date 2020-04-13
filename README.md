@@ -67,5 +67,45 @@
       // other 
     });
   ```
-  
+
   4. 注意：分类可以先查询top250，然后前台对这些电影数据的类别做汇总，然后列出所有电影的分类。
+
+
+
+## 初始化数据库
+
+1. 建立数据库
+
+```sql
+CREATE DATABASE movies;
+USE movies;
+```
+
+2. Table 1: 点击table选择table data import wizard导入movie.csv作为movie_basic(需要再加duration，country和tags的column)
+
+3. Table 2: 
+
+   ```sql
+   CREATE TABLE movie_detail (
+   id INT,
+   summary TEXT,
+   review_one_image TEXT,
+   review_one_author VARCHAR(160),
+   review_one_detail VARCHAR(255),
+   review_two_image TEXT,
+   review_two_author VARCHAR(160),
+   review_two_detail VARCHAR(255),
+   review_three_image TEXT,
+   review_three_author VARCHAR(160),
+   review_three_detail VARCHAR(255),
+   review_four_image TEXT,
+   review_four_author VARCHAR(160),
+   review_four_detail VARCHAR(255),
+   review_five_image TEXT,
+   review_five_author VARCHAR(160),
+   review_five_detail VARCHAR(255)
+   )
+   ```
+
+   
+
