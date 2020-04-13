@@ -14,9 +14,9 @@ import javax.sql.DataSource;
     public DataSource dataSource() {
       DriverManagerDataSource dataSource = new DriverManagerDataSource();
       dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-      dataSource.setUrl("");
-      dataSource.setUsername("");
-      dataSource.setPassword("");
+      dataSource.setUrl("jdbc:mysql://localhost:3306/movies");
+      dataSource.setUsername("twer");
+      dataSource.setPassword("Twer123!");
       return dataSource;
     }
   }
