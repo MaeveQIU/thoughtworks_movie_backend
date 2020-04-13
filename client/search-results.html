@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Movie Theater</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="header">
+    <a href="./index.html">
+      <img class="logo" src="./image/tw-logo.svg" alt="ThoughtWorks Logo">
+    </a>
+    <a href="./index.html">
+      <img class="icon-movie" src="./image/movie.svg" alt="Movie Icon">
+    </a>
+    <input type="text" id="search-area" placeholder="Type the Keywords to Search for Movies...">
+    <div>
+      <img id="search-button" src="./image/search.svg" alt="Search Icon">
+    </div>
+  </header>
+  <section id="main"></section>
+  <footer>❤︎ Made with Love @ThoughtWorks.</footer>
+  <script type="text/javascript" src="./scripts.js"></script>
+  <script>
+    window.onload = () => {
+      const input = getLocalData("inputs");
+      displayResult(checkResult(input[input.length - 1].value));
+      addEvents();
+    }
+  </script>
+</body>
+</html>
