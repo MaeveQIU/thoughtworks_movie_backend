@@ -1,4 +1,4 @@
 package com.thoughtworks.theater.controller;
 
-public class theaterController {
+public class TheaterController {
 }

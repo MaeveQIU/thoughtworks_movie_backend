@@ -12,7 +12,7 @@ public class Review {
   private String authorName;
   private String review;
 
-  //reviewId is auto-icrement in mysql, so no need to assign reviewId.
+  //reviewId is auto-increment in mysql, so no need to assign reviewId.
   public Review(int movieId, String authorProfile, String authorName, String review) {
     this.movieId = movieId;
     this.authorProfile = authorProfile;
