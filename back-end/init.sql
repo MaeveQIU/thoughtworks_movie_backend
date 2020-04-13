@@ -63,8 +63,8 @@ INSERT INTO movie_review (movie_id, author_profile, author_name, review) VALUES
 '滔妹儿会画画',
 '首先，我不质疑电影的思想及内涵，且觉得是很好的，冲着电影的立意和阿米尔汗，我给两星，但是看到女主角的人设，我实在打不出三星。 纵然女主有着以一己之力打破常规的高级思想，但是女主的实际行动及人设和她的...');
 SELECT * FROM movies.movie_review;
-
-
+SELECT * FROM movie_basic WHERE title LIKE '%肖申克的救赎%';
+select user,host from mysql.user;
 
 
 
