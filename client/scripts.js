@@ -52,47 +52,45 @@ const filterList = genre => {
   return movieList.filter(element => element.genres.includes(genre));
 }
 
-const postInputData = () => {
-  const value = document.getElementById("search-area").value;
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://localhost:3000/inputs", false);
-  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhr.send(`value=${value}`);
+// const getLocalData = database => {
+//   const xhr = new XMLHttpRequest();
+//   xhr.open("GET", `http://localhost:3000/${database}`, false);
+//   xhr.send();
+//   if (xhr.readyState === 4 && xhr.status === 200) {
+//     return JSON.parse(xhr.responseText);
+//   }
+// }
+
+const getInput = () => {
+  const input = window.location.href.split("?")[1];
+  const value = input.split("=")[1];
+  return value;
 }
 
-const getLocalData = database => {
+const getSearchResult = input => {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", `http://localhost:3000/${database}`, false);
+  xhr.open("GET", `http://127.0.0.1:8080/movies/search/${input}`, false);
   xhr.send();
   if (xhr.readyState === 4 && xhr.status === 200) {
     return JSON.parse(xhr.responseText);
   }
 }
 
-const checkResult = input => {
-  if (input !== "") {
-    return movieList.filter(element => element.title.includes(input));
-  }
-  else {
-    return [];
-  }
-}
-
 const displayResult = resultArr => {
-  if (resultArr.length !== 0) {
+  if (resultArr != null) {
     resultArr.forEach(element => {
       const result = document.createElement("div");
       result.setAttribute("class", "movie-result")
       result.innerHTML = `
-      <img src=${element.images.small}>
+      <img src=${element.image}>
       <a href="./movie-details.html">
         <p class="title">${element.title}</p>
       </a>
-      <p>Rating: ${element.rating.average}</p>
+      <p>Rating: ${element.rating}</p>
       <p>Year: ${element.year}</p>
-      <p>Directors: ${element.directors.map(item => item.name_en).join(", ")}</p>
-      <p>Casts: ${element.casts.map(item => item.name_en).join(", ")}</p>
-      <p>Duration: ${element.durations[0]}`
+      <p>Directors: ${element.directors}</p>
+      <p>Casts: ${element.casts.split(",").join(", ")}</p>
+      <p>Duration: ${element.duration}`
       document.getElementById("main").appendChild(result);
     });
   }
@@ -190,10 +188,8 @@ const addEvents = () => {
       renderMovie(target);
     }
     if (event.target.id === "search-button") {
-      postInputData();
-      const input = getLocalData("inputs");
-      clearList("main");
-      displayResult(checkResult(input[input.length - 1].value));
+      const value = document.getElementById("search-area").value;
+      window.open(`search-results.html?value=${value}`, "_self");
     }
     if (event.target.className === "title") {
       postMovieData(event);

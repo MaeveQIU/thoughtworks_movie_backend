@@ -25,8 +25,9 @@
   <script type="text/javascript" src="./scripts.js"></script>
   <script>
     window.onload = () => {
-      const input = getLocalData("inputs");
-      displayResult(checkResult(input[input.length - 1].value));
+      const value = getInput();
+      const result = getSearchResult(value);
+      displayResult(result);
       addEvents();
     }
   </script>
