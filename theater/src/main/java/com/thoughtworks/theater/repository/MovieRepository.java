@@ -30,4 +30,6 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
             @Param("tags") String tags,
             @Param("summary") String summary);
 
+  @Query("SELECT * FROM movie_basic LIMIT :offset, :number")
+  List<Movie> findWithPagination(@Param("offset") int offset, @Param("number")int number);
 }

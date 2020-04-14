@@ -31,4 +31,9 @@ public class TheaterService {
   public List<Review> getCommentsByMovieId(int movieId) {
     return reviewRepo.findByMovieId(movieId);
   }
+
+  public List<Movie> getMoviesWithPagination(int page, int number) {
+    int offset = (page - 1) * number;
+    return movieRepo.findWithPagination(offset, number);
+  }
 }

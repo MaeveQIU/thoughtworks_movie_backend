@@ -2,6 +2,8 @@ package com.thoughtworks.theater.controller;
 import com.thoughtworks.theater.entity.Movie;
 import com.thoughtworks.theater.service.TheaterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,19 @@ public class MyController {
   @GetMapping("/get/all")
   public List<Movie> getAll() {
     return userService.getAllMovies();
+  }
+
+  /**
+   * url send parameter, e.g. "get/page?page=2&number=50", will return records from 50 to 100.
+   * @return List of Movie
+   */
+  @GetMapping("get/page")
+  public ResponseEntity<List<Movie>> getWithPagination(@RequestParam("page") int page, @RequestParam("number") int number) {
+    List<Movie> result = userService.getMoviesWithPagination(page, number);
+    if (result.isEmpty()) {
+      return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+    return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
   @GetMapping("/get/{title}")
