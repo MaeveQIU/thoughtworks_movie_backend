@@ -21,8 +21,12 @@ public class MyController {
   private TheaterService userService;
 
   @GetMapping("/get/all")
-  public List<Movie> getAll() {
-    return userService.getAllMovies();
+  public ResponseEntity<List<Movie>> getAll() {
+    List<Movie>  result = userService.getAllMovies();
+    if (result.isEmpty()) {
+      return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+    return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
   /**
@@ -38,14 +42,13 @@ public class MyController {
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
-  @GetMapping("/get/{title}")
-  public List<Movie> getByTitle(@PathVariable String title) {
-    List<Movie> movies = userService.findByMovieNameLike(title);
-    if (movies.isEmpty()) {
-      return null;
-    } else {
-      return movies;
+  @GetMapping("/search/{title}")
+  public ResponseEntity<List<Movie>> getByTitle(@PathVariable String title) {
+    List<Movie> result = userService.findByMovieNameLike(title);
+    if (result.isEmpty()) {
+      return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
+    return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
 }
