@@ -1,18 +1,18 @@
-const getData = (start, count) => {
+const getData = () => {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", `http://127.0.0.1:8888/v2/movie/top250?start=${start}&count=${count}`, false);
+  xhr.open("GET", `http://127.0.0.1:8080/movies/get/all`, false);
   xhr.send();
   if (xhr.readyState === 4 && xhr.status === 200) {
     return JSON.parse(xhr.responseText);
   }
 }
 
-const movieList = getData(0, 40).subjects;
+const movieList = getData().slice(0, 40);
 
 const getGenre = movieList => {
   let newList = [];
   movieList.forEach(element => {
-    element.genres.forEach(item => {
+    element.genres.split(",").forEach(item => {
       if (!newList.includes(item)) {
         newList.push(item);
       }
@@ -35,11 +35,11 @@ const renderMovie = movieList => {
   movieList.forEach(element => {
     const newMovie = document.createElement("div");
     newMovie.innerHTML = `
-    <img src=${element.images.small}>
+    <img src=${element.image}>
     <a href="./movie-details.html">
       <p class="title">${element.title}</p>
     </a>
-    <p class="rating">Rating: ${element.rating.average}</p>`
+    <p class="rating">Rating: ${element.rating}</p>`
     document.getElementById("movies").appendChild(newMovie)
   });
 }
