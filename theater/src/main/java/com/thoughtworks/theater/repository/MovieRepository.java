@@ -10,8 +10,9 @@ import java.util.List;
 
 public interface MovieRepository extends CrudRepository<Movie, Integer> {
 
-  @Query("SELECT * FROM movie_basic WHERE title LIKE %:title%;")
+  @Query("SELECT * FROM movie_basic WHERE title Like :title;")
   List<Movie> findByTitle(@Param("title") String title);
+
 
   @Modifying
   @Query("INSERT INTO movie_basic VALUES (:movieId, :title, :year, :genres, :rating, :directors, :casts, :duration," +
