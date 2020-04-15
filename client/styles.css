@@ -98,6 +98,23 @@ a {
   margin-top: -10px;
 }
 
+#pages {
+  bottom: 55px;
+  position: relative;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 60px;
+}
+
+#pages .page-number {
+  display: inline;
+  margin-left: 40px;
+  padding: 5px;
+  border: solid 1px #000;
+  border-radius: 20px;
+}
+
 footer {
   background-color: #000;
   color: snow;

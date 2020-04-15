@@ -7,8 +7,17 @@ const getData = () => {
   }
 }
 
+const getDataByPage = page => {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `http://127.0.0.1:8080/movies/basic/page?page=${page}&number=48`, false);
+  xhr.send();
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    return JSON.parse(xhr.responseText);
+  }
+}
+
 const allMovieList = getData();
-const movieList = allMovieList.slice(0, 40);
+const movieList = allMovieList.slice(0, 48);
 
 const getGenre = movieList => {
   let newList = [];
@@ -48,7 +57,7 @@ const clearList = node => {
 }
 
 const filterList = genre => {
-  return movieList.filter(element => element.genres.includes(genre));
+  return allMovieList.filter(element => element.genres.includes(genre));
 }
 
 const getInput = () => {
@@ -169,6 +178,12 @@ const addEvents = () => {
       let target = filterList(event.target.id);
       clearList("movies");
       renderMovie(target);
+    }
+    if (event.target.className === "page-number") {
+      let page = event.target.innerText;
+      let moviePage = getDataByPage(page);
+      clearList("movies");
+      renderMovie(moviePage);
     }
     if (event.target.id === "search-button") {
       const value = document.getElementById("search-area").value;

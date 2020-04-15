@@ -30,7 +30,7 @@ public class MyController {
   }
 
   /**
-   * url send parameter, e.g. "get/page?page=2&number=50", will return records from 50 to 100.
+   * url send parameter, e.g. "basic/page?page=2&number=50", will return records from 50 to 100.
    * @return List of Movie
    */
   @GetMapping("basic/page")
