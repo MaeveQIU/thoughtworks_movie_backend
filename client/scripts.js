@@ -7,7 +7,8 @@ const getData = () => {
   }
 }
 
-const movieList = getData().slice(0, 40);
+const allMovieList = getData();
+const movieList = allMovieList.slice(0, 40);
 
 const getGenre = movieList => {
   let newList = [];
@@ -98,13 +99,9 @@ const displayResult = resultArr => {
   }
 }
 
-const getMovieId = movieTitle => {
-  return movieList.filter(element => element.title === movieTitle)[0].id;
-}
-
-const getMovieData = (movieId) => {
+const getReviews = id => {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", `http://127.0.0.1:8888/v2/movie/subject/${movieId}`, false);
+  xhr.open("GET", `http://127.0.0.1:8080/movies/review/${id}`, false);
   xhr.send();
   if (xhr.readyState === 4 && xhr.status === 200) {
     return JSON.parse(xhr.responseText);
@@ -112,19 +109,19 @@ const getMovieData = (movieId) => {
 }
 
 const calculateScoreAndRank = movieItem => {
-  const movieDatabase = getLocalData("recommender");
+  const movieDatabase = allMovieList;
   movieDatabase.forEach(element => {
     let score = 0;
     score += (movieItem.year === element.year) ? 1 : 0;
     score += (movieItem.countries === element.countries) ? 2 : 0;
-    score += (movieItem.genres.filter(item => element.genres.includes(item))).length * 3;
-    score += (movieItem.tags.filter(item => element.tags.includes(item))).length * 4;
+    score += (movieItem.genres.split(",").filter(item => element.genres.includes(item))).length * 3;
+    score += (movieItem.tags.split(",").filter(item => element.tags.includes(item))).length * 4;
     element.score = score;
   });
   return movieDatabase.sort((x, y) => y.score - x.score).slice(1, 6);
 }
 
-const renderMovieItem = element => {
+const renderMovieItem = (element, review) => {
   const movieItem = element[0];
   document.getElementById("info").innerHTML = `
     <img src="${movieItem.image}">
@@ -141,14 +138,14 @@ const renderMovieItem = element => {
     <h2>Summary: </h2>
     <p>${movieItem.summary}</p>`
 
-  movieItem.popular_reviews.slice(0, 5).forEach(element => {
+    review.forEach(element => {
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
       <td>
-        <img src=${element.author.avatar}>
-        <p>${element.author.name}</p>
+        <img src=${element.authorProfile}>
+        <p>${element.authorName}</p>
       </td>
-      <td class="comment">${element.summary}</td>`
+      <td class="comment">${element.review}</td>`
     document.querySelector("table").appendChild(newRow);
   });
 

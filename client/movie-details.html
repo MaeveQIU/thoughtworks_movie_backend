@@ -38,7 +38,8 @@
     window.onload = () => {
       const value = getDecodeInput();
       const result = getSearchResult(value);
-      renderMovieItem(result);
+      const review = getReviews(result[0].movieId);
+      renderMovieItem(result, review);
       addEvents();
     }
   </script>

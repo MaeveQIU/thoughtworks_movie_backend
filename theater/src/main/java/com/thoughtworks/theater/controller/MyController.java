@@ -1,5 +1,6 @@
 package com.thoughtworks.theater.controller;
 import com.thoughtworks.theater.entity.Movie;
+import com.thoughtworks.theater.entity.Review;
 import com.thoughtworks.theater.service.TheaterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,15 @@ public class MyController {
   @GetMapping("/search/{title}")
   public ResponseEntity<List<Movie>> getByTitle(@PathVariable String title) {
     List<Movie> result = userService.findByMovieNameLike(title);
+    if (result.isEmpty()) {
+      return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+    return new ResponseEntity<>(result, HttpStatus.OK);
+  }
+
+  @GetMapping("/review/{id}")
+  public ResponseEntity<List<Review>> getCommentsById(@PathVariable Integer id) {
+    List<Review> result = userService.getCommentsByMovieId(id);
     if (result.isEmpty()) {
       return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
