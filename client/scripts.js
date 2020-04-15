@@ -1,6 +1,6 @@
 const getData = () => {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", `http://127.0.0.1:8080/movies/get/all`, false);
+  xhr.open("GET", `http://127.0.0.1:8080/movies/basic/all`, false);
   xhr.send();
   if (xhr.readyState === 4 && xhr.status === 200) {
     return JSON.parse(xhr.responseText);
@@ -65,7 +65,7 @@ const getDecodeInput = () => {
 
 const getSearchResult = input => {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", `http://127.0.0.1:8080/movies/search/${input}`, false);
+  xhr.open("GET", `http://127.0.0.1:8080/movies/result/${input}`, false);
   xhr.send();
   if (xhr.readyState === 4 && xhr.status === 200) {
     return JSON.parse(xhr.responseText);
@@ -153,7 +153,7 @@ const renderMovieItem = (element, review) => {
     const newMovie = document.createElement("div");
     newMovie.innerHTML = `
     <img src=${item.image}>
-    <p>${item.title}</p>
+    <p class="title">${item.title}</p>
     <p>${item.year}</p>`
     document.getElementById("recommended-movies").appendChild(newMovie);
   });

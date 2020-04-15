@@ -243,6 +243,11 @@ footer {
   box-shadow: 4px 4px 5px 2px #252524d0;
 }
 
+#recommended-movies .title {
+  color: #9b59b6;
+  cursor: pointer;
+}
+
 #recommended-movies p {
   margin-top: 10px;
 }

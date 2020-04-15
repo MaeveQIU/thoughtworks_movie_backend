@@ -17,11 +17,10 @@ public class MyController {
   //search by movie name, return List<Movie>
   //get comments by movieId, return List<Review>
 
-  // 传回去的值里genres等都是string，前端得改！
   @Autowired
   private TheaterService userService;
 
-  @GetMapping("/get/all")
+  @GetMapping("/basic/all")
   public ResponseEntity<List<Movie>> getAll() {
     List<Movie>  result = userService.getAllMovies();
     if (result.isEmpty()) {
@@ -34,7 +33,7 @@ public class MyController {
    * url send parameter, e.g. "get/page?page=2&number=50", will return records from 50 to 100.
    * @return List of Movie
    */
-  @GetMapping("get/page")
+  @GetMapping("basic/page")
   public ResponseEntity<List<Movie>> getWithPagination(@RequestParam("page") int page, @RequestParam("number") int number) {
     List<Movie> result = userService.getMoviesWithPagination(page, number);
     if (result.isEmpty()) {
@@ -43,7 +42,7 @@ public class MyController {
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
-  @GetMapping("/search/{title}")
+  @GetMapping("/result/{title}")
   public ResponseEntity<List<Movie>> getByTitle(@PathVariable String title) {
     List<Movie> result = userService.findByMovieNameLike(title);
     if (result.isEmpty()) {
