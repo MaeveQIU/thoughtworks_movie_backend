@@ -36,9 +36,7 @@ const renderMovie = movieList => {
     const newMovie = document.createElement("div");
     newMovie.innerHTML = `
     <img src=${element.image}>
-    <a href="./movie-details.html">
-      <p class="title">${element.title}</p>
-    </a>
+    <p class="title">${element.title}</p>
     <p class="rating">Rating: ${element.rating}</p>`
     document.getElementById("movies").appendChild(newMovie)
   });
@@ -52,17 +50,14 @@ const filterList = genre => {
   return movieList.filter(element => element.genres.includes(genre));
 }
 
-// const getLocalData = database => {
-//   const xhr = new XMLHttpRequest();
-//   xhr.open("GET", `http://localhost:3000/${database}`, false);
-//   xhr.send();
-//   if (xhr.readyState === 4 && xhr.status === 200) {
-//     return JSON.parse(xhr.responseText);
-//   }
-// }
-
 const getInput = () => {
   const input = window.location.href.split("?")[1];
+  const value = input.split("=")[1];
+  return value;
+}
+
+const getDecodeInput = () => {
+  const input = decodeURIComponent(window.location.href.split("?")[1]);
   const value = input.split("=")[1];
   return value;
 }
@@ -83,9 +78,7 @@ const displayResult = resultArr => {
       result.setAttribute("class", "movie-result")
       result.innerHTML = `
       <img src=${element.image}>
-      <a href="./movie-details.html">
-        <p class="title">${element.title}</p>
-      </a>
+      <p class="title">${element.title}</p>
       <p>Rating: ${element.rating}</p>
       <p>Year: ${element.year}</p>
       <p>Directors: ${element.directors}</p>
@@ -131,17 +124,18 @@ const calculateScoreAndRank = movieItem => {
   return movieDatabase.sort((x, y) => y.score - x.score).slice(1, 6);
 }
 
-const renderMovieItem = (movieItem) => {
+const renderMovieItem = element => {
+  const movieItem = element[0];
   document.getElementById("info").innerHTML = `
-    <img src="${movieItem.images.small}">
+    <img src="${movieItem.image}">
     <p class="title">${movieItem.title}</p>
-    <p>Rating: ${movieItem.rating.average}</p>
+    <p>Rating: ${movieItem.rating}</p>
     <p>Year: ${movieItem.year}</p>
-    <p>Directors: ${movieItem.directors.map(item => item.name_en).join(", ")}</p>
-    <p>Casts: ${movieItem.casts.map(item => item.name_en).join(", ")}</p>
-    <p>Duration: ${movieItem.durations[0]}
-    <p>Country: ${movieItem.countries[0]}
-    <p>Genres: ${movieItem.genres.join(", ")}`
+    <p>Directors: ${movieItem.directors}</p>
+    <p>Casts: ${movieItem.casts.split(",").join(", ")}</p>
+    <p>Duration: ${movieItem.duration}
+    <p>Country: ${movieItem.countries}
+    <p>Genres: ${movieItem.genres.split(",").join(", ")}`
 
   document.getElementById("summary").innerHTML = `
     <h2>Summary: </h2>
@@ -168,14 +162,6 @@ const renderMovieItem = (movieItem) => {
   });
 }
 
-const postMovieData = (event) => {
-  const title = event.target.innerText;
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://localhost:3000/movies", false);
-  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhr.send(`title=${title}`);
-}
-
 const addEvents = () => {
   document.addEventListener("click", event => {
     if (event.target.className === "all-list") {
@@ -192,7 +178,8 @@ const addEvents = () => {
       window.open(`search-results.html?value=${value}`, "_self");
     }
     if (event.target.className === "title") {
-      postMovieData(event);
+      const title = event.target.innerText;
+      window.open(`movie-details.html?value=${title}`, "_self");
     }
   });
 }

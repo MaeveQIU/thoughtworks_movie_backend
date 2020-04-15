@@ -36,9 +36,9 @@
   <script type="text/javascript" src="./scripts.js"></script>
   <script>
     window.onload = () => {
-      const movie = getLocalData("movies");
-      const id = getMovieId(movie[movie.length - 1].title);
-      renderMovieItem(getMovieData(id));
+      const value = getDecodeInput();
+      const result = getSearchResult(value);
+      renderMovieItem(result);
       addEvents();
     }
   </script>
